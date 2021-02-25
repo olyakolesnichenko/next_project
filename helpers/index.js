@@ -4,8 +4,6 @@ import newsData from '../sources/news.json';
 import discountsData from '../sources/discounts.json';
 import carsData from '../sources/cars.json';
 
-//import usersData from '../sources/users.json';
-
 const getCookieUserId = (context) => {
     const cookies = nookies.get(context);
     return 'userID' in cookies ? cookies.userID : null;
@@ -18,27 +16,12 @@ const setCookieUserId = (context, userId) => {
     })
 };
 
-const getUserVisits = async (context)=> {
+const getUserVisits = (context)=> {
     let userId = getCookieUserId(context);
     let visitCounts = 1;
-    //let usersData = await readFile('users');
-    // if (userId){
-    //     if (usersData.length > 0)
-    //         usersData.map((value, key) => {
-    //             if (value.userId == userId){
-    //                 value.visitCounts = ++value.visitCounts;
-    //                 visitCounts = value.visitCounts;
-    //             }
-    //         });
-    // } else{
-        userId = Date.now();
-        setCookieUserId(context, userId);
 
-        //const newUser = {userId: `${userId}`, visitCounts: visitCounts };
-       // usersData.push(newUser);
-    //}
-
-    //await writeFile('users',usersData);
+    userId = Date.now();
+    setCookieUserId(context, userId);
 
     return {visitCounts, userId: `${userId}`};
 };

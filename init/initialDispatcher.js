@@ -13,7 +13,7 @@ export const initialDispatcher = async (
   store
 ) => {
 
-        const {visitCounts, userId} = await getUserVisits(context);
+        const {visitCounts, userId} = getUserVisits(context);
         const userType = getUserType(visitCounts);
 
         await serverDispatch(store, (dispatch) => {
