@@ -1,0 +1,25 @@
+.asteroidsWrapper{
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #E0FBFC;
+  border-radius: 20px;
+  font-family: 'Roboto', sans-serif;
+  >h2{
+    color: #1D2F6F;
+    font-weight: 700;
+    font-style: italic;
+  }
+  .asteroids {
+    p{
+      font-size: 18px;
+      font-weight: 100;
+    }
+  }
+  .purgeStyle{
+    color: red;
+    font-weight: 700;
+    font-style: normal;
+  }
+}
