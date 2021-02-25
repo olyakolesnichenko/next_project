@@ -34,8 +34,8 @@ const getUserVisits = async (context)=> {
         userId = Date.now();
         setCookieUserId(context, userId);
 
-        const newUser = {userId: `${userId}`, visitCounts: visitCounts };
-        usersData.push(newUser);
+        //const newUser = {userId: `${userId}`, visitCounts: visitCounts };
+       // usersData.push(newUser);
     }
 
     //await writeFile('users',usersData);
