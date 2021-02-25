@@ -6,7 +6,6 @@ import { asteroidsCopyActions } from '../../actions';
 import { verifyBrowser } from "../../../../helpers/verifyBrowser";
 import { verifyEnvironment } from "../../../../helpers/verifyEnvironment";
 import { developmentLogger } from "../../../../helpers/logger";
-import { createClientProductionLog } from "../../../../helpers/createClientProductionLog";
 
 export function* loadAsteroidsCopy () {
   const { isDevelopment } = verifyEnvironment();
@@ -17,10 +16,6 @@ export function* loadAsteroidsCopy () {
   try {
     if (isDevelopment) {
       developmentLogger.info(`API GET request to ${url} was started...`);
-    } else {
-        if (isBrowser) {
-            yield createClientProductionLog('rest', `API GET request to ${url} was started...`);
-        }
     }
     const response = yield call(fetch, url);
 
@@ -32,10 +27,6 @@ export function* loadAsteroidsCopy () {
             developmentLogger.warn({
                 message: `Current status code is: ${status}`
             });
-        } else {
-            if (isBrowser) {
-                yield createClientProductionLog('rest', `Current status code is: ${status}`);
-            }
         }
     }
 
@@ -45,19 +36,11 @@ export function* loadAsteroidsCopy () {
           developmentLogger.warn({
               message: `Current status code is: ${status}`
           });
-      } else {
-          if (isBrowser) {
-              yield createClientProductionLog('rest', `Current status code is: ${status}`);
-          }
       }
       console.log('loadAsteroidsAsync', error);
   } finally {
       if (isDevelopment) {
           developmentLogger.info(`API GET request to ${url} was finished with status ${status}`);
-      } else {
-          if (isBrowser) {
-              yield createClientProductionLog('rest', `API GET request to ${url} was finished with status ${status}`);
-          }
       }
   }
 }

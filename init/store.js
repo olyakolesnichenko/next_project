@@ -17,7 +17,6 @@ import { rootSaga } from './rootSaga';
 import { verifyBrowser } from "../helpers/verifyBrowser";
 import { verifyEnvironment } from "../helpers/verifyEnvironment";
 import { serverReduxLogger } from "../helpers/serverReduxLogger";
-import { clientReduxLogger } from "../helpers/clientReduxLogger";
 
 let store;
 
@@ -39,10 +38,6 @@ const bindMiddleware = (middleware) => {
             middleware.push(
                 serverReduxLogger
             )
-        }
-    } else {
-        if (isBrowser) {
-           middleware.push(clientReduxLogger);
         }
     }
 

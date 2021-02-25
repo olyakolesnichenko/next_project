@@ -1,5 +1,10 @@
 import nookies from 'nookies';
-import fs from 'fs/promises';
+
+import newsData from '../sources/news.json';
+import discountsData from '../sources/discounts.json';
+import carsData from '../sources/cars.json';
+
+import usersData from '../sources/users.json';
 
 const getCookieUserId = (context) => {
     const cookies = nookies.get(context);
@@ -16,7 +21,7 @@ const setCookieUserId = (context, userId) => {
 const getUserVisits = async (context)=> {
     let userId = getCookieUserId(context);
     let visitCounts = 1;
-    let usersData = await readFile('users');
+    //let usersData = await readFile('users');
     if (userId){
         if (usersData.length > 0)
             usersData.map((value, key) => {
@@ -33,7 +38,7 @@ const getUserVisits = async (context)=> {
         usersData.push(newUser);
     }
 
-    await writeFile('users',usersData);
+    //await writeFile('users',usersData);
 
     return {visitCounts, userId: `${userId}`};
 };
@@ -42,41 +47,19 @@ const getUserType = (visitCounts) => {
     return visitCounts < 3 ? "guest" : (visitCounts > 5 ? "familyMember" : "friend");
 };
 
+const getNewsData = () => {
 
-const readFile = async (filename)=> {
-
-    try {
-        const source = await fs.readFile(`./sources/${filename}.json`, 'utf-8');
-
-        return source ? JSON.parse(source) : [];
-
-    } catch (error) {
-        console.error(error.message)
-    }
-
+    return newsData;
 };
 
-const writeFile = async (filename, newData) => {
-    try {
-        await fs.writeFile(`./sources/${filename}.json`, JSON.stringify(newData, null, 4))
-    } catch (error) {
-        console.error(error.message)
-    }
-};
+const getDiscountsData = () => {
 
-const getNewsData = async () => {
-
-    return await readFile('news');
-};
-
-const getDiscountsData = async () => {
-
-    return await readFile('discounts');
+    return discountsData;
 };
 
 const getCarsData = async () => {
 
-    return await readFile('cars');
+    return carsData;
 };
 
 const getDashboardData = async () => {

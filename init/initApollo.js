@@ -3,7 +3,6 @@ import { initializeApollo } from './apollo';
 import { verifyBrowser } from "../helpers/verifyBrowser";
 import { verifyEnvironment } from "../helpers/verifyEnvironment";
 import { serverGraphqlInformationLogger } from "../helpers/serverGraphqlInformationLogger";
-import { clientGraphqlInformationLogger } from "../helpers/clientGraphqlInformationLogger";
 import { serverGraphqlErrorLogger } from '../helpers/serverGraphqlErrorLogger';
 
 export const initApollo = async (context, executor) => {
@@ -19,10 +18,6 @@ export const initApollo = async (context, executor) => {
           serverGraphqlInformationLogger(query, {
               isStarted: true,
           });
-      } else {
-          if (isBrowser){
-              clientGraphqlInformationLogger(query, 'graphql started')
-          }
       }
       try {
         const queryResult = await apolloClient.query({
@@ -37,20 +32,12 @@ export const initApollo = async (context, executor) => {
         return queryResult;
       } catch (err) {
         serverGraphqlErrorLogger(query, err, context);
-        if (isProduction && isBrowser){
-            console.log(`GraphQL req error: ${err.message}`);
-            clientGraphqlInformationLogger(query, `GraphQL req error: ${err.message}`);
-        }
         return undefined;
       } finally {
         if (isDevelopment) {
             serverGraphqlInformationLogger(query, {
                 isFinished: true,
             });
-        } else {
-            if (isBrowser){
-                clientGraphqlInformationLogger(query, "graphql req finished");
-            }
         }
       }
     };
